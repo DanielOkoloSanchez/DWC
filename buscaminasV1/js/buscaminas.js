@@ -1,85 +1,116 @@
-let maxFilas = prompt("¿Cuantas filas quieres?");
-let maxColumnas = prompt("¿Cuantas columnas quieres?");
-let numMinas = prompt("¿Cuantas minas quieres introducir?")
+
+function AppStart() {
+    arrayTablero = crearTablero(maxFilas,maxColumnas);
+    ponerMinas(arrayTablero,maxFilas,maxColumnas);
+    numMinasAlrrededor(arrayTablero,maxFilas,maxColumnas);
+    pintarTablero(arrayTablero,maxFilas,maxColumnas);
+}
+
+let maxFilas = prompt('¿Cuántas filas quieres?');
+let maxColumnas = prompt('¿Cuántas columnas quieres?');
+let numMinas = prompt('¿Cuántas minas quieres introducir?');
 
 
-document.write("<table>");
-document.write("<tr>");
 
+function pintarTablero(tablero,filas,columnas) {
+    document.write('<table>');
 
-//creamos el tablero
+for (let i = 0; i < filas; i++) {
+    document.write('<tr>');
 
-for(let j = 0; j < maxColumnas; j++){
-    document.write("<tr>");
-    for(let i = 0; i < maxFilas; i++){
-        document.write("<td></td>");
+    for (let j = 0; j < columnas; j++) {
+        document.write('<td>'+ tablero[i][j] +'</td>');
     }
+
+    document.write('</tr>');
+}
+document.write('</table>');
+
 }
 
 
-document.write("</tr>");
-document.write("</table>");
 
-//crear array bidimensional para guardar las minas
+// Crear array bidimensional para guardar las minas
 
-let arrayTablero = [];
-let contadorMinas = 0;
-let posFila;
+
+
+
+
+function crearTablero(filas,columnas) {
+
+    let arrayTablero = [];
+    console.log("crear tablero")
+
+    for (let fila = 0; fila < filas; fila++) {
+        arrayTablero[fila] = new Array(maxColumnas);
+    
+        for (let columna = 0; columna < columnas; columna++) {
+            arrayTablero[fila][columna] = '';
+        }
+    }
+    console.log(arrayTablero);
+    return arrayTablero
+
+}
+
+
+
+
+function ponerMinas(arrayTablero,filas,columnas) {
+    let posFila;
 let posColumna;
-
-for (let fila = 0; fila < maxFilas; fila++){
-    arrayTablero[fila] = new Array(maxColumnas);
-for (let columna = 0; columna < maxColumnas ; columna++){
-    arrayTablero[fila][columna] = "";
-}
-
-}
-
-//Poner minas
+let contadorMinas = 0;
 
 while (contadorMinas < numMinas) {
-    posFila = Math.floor(Math.random()*maxFilas) ;
-    posColumna = Math.floor(Math.random()*maxColumnas) ;
-    
-    if (arrayTablero[posFila][posColumna] != "MINA" ){
-        arrayTablero[posFila][posColumna] = "MINA"
-        contadorMinas++ ;
+    posFila = Math.floor(Math.random() * filas);
+    posColumna = Math.floor(Math.random() * columnas);
+
+    if (arrayTablero[posFila][posColumna] != 'MINA') {
+        arrayTablero[posFila][posColumna] = 'MINA';
+        contadorMinas++;
     };
-
-   
-
-   
+ };
+    
 }
 
 
 
+function numMinasAlrrededor(arrayTablero,filas,columnas) {
 
+    let numMinasAlrededor;
 
-
-
-let numMinasAlrrededor = 0;
-
-for (let fila = 0; fila < maxFilas; fila ++){
-    for (let columna = 0; columna < maxColumnas; columna++){
-        numMinasAlrrededor = 0;
-        if(arrayTablero[fila][columna] != "MINA"){ 
-        for (let cFila = fila -1;  cFila < fila + 1; cFila++){
-                for(let cColumna = columna - 1; cColumna < columna + 1; cColumna ++){
-                    
-                    if((cFila >= 0 && cFila < maxFilas) && (cColumna > 0 && cColumna < maxColumnas)){
-                    
-                    if (arrayTablero[cFila][cColumna] == "MINA"){
-                        numMinasAlrrededor++;
+    for (let fila = 0; fila < filas; fila++) {
+        for (let columna = 0; columna < columnas; columna++) {
+            numMinasAlrededor = 0;
+            if (arrayTablero[fila][columna] != 'MINA') {
+                for (let cFila = fila - 1; cFila <= fila + 1; cFila++) {
+                    if (cFila >= 0 && cFila < filas) {
+                        for (let cColumna = columna - 1; cColumna <= columna + 1; cColumna++) {
+                            if (cColumna >= 0 && cColumna < columnas &&
+                                arrayTablero[cFila][cColumna] == 'MINA') {
+                                
+                                numMinasAlrededor++;
+                            }
+                        }
                     }
-                    }
+                    arrayTablero[fila][columna] = numMinasAlrededor;
                 }
+    
             }
-            arrayTablero[fila][columna] = numMinasAlrrededor;
-            
         }
     }
 }
 
 
 
-console.log(arrayTablero);
+
+
+
+
+AppStart()
+
+
+
+
+
+  
