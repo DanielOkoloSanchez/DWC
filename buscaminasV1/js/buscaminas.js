@@ -1,14 +1,17 @@
 
 function AppStart() {
+    
+    let maxFilas = prompt('¿Cuántas filas quieres?');
+    let maxColumnas = prompt('¿Cuántas columnas quieres?');
+    let numMinas = prompt('¿Cuántas minas quieres introducir?');
+    
     arrayTablero = crearTablero(maxFilas,maxColumnas);
     ponerMinas(arrayTablero,maxFilas,maxColumnas);
     numMinasAlrrededor(arrayTablero,maxFilas,maxColumnas);
     pintarTablero(arrayTablero,maxFilas,maxColumnas);
 }
 
-let maxFilas = prompt('¿Cuántas filas quieres?');
-let maxColumnas = prompt('¿Cuántas columnas quieres?');
-let numMinas = prompt('¿Cuántas minas quieres introducir?');
+
 
 
 
