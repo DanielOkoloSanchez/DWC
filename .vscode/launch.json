@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/buscaminasV1/js/buscaminas.js"
+            "program": "${workspaceFolder}/buscaminasV1/js/buscaminas_objs.js"
         
         }
 
