@@ -6,7 +6,7 @@ function AppStart() {
     let numMinas = prompt('¿Cuántas minas quieres introducir?');
     
     arrayTablero = crearTablero(maxFilas,maxColumnas);
-    ponerMinas(arrayTablero,maxFilas,maxColumnas);
+    arrayTablero = ponerMinas(arrayTablero,numMinas,maxFilas,maxColumnas);
     numMinasAlrrededor(arrayTablero,maxFilas,maxColumnas);
     pintarTablero(arrayTablero,maxFilas,maxColumnas);
 }
@@ -33,7 +33,7 @@ document.write('</table>');
 
 
 
-// Crear array bidimensional para guardar las minas
+
 
 
 
@@ -45,7 +45,7 @@ function crearTablero(filas,columnas) {
     console.log("crear tablero")
 
     for (let fila = 0; fila < filas; fila++) {
-        arrayTablero[fila] = new Array(maxColumnas);
+        arrayTablero[fila] = new Array(filas);
     
         for (let columna = 0; columna < columnas; columna++) {
             arrayTablero[fila][columna] = '';
@@ -59,7 +59,7 @@ function crearTablero(filas,columnas) {
 
 
 
-function ponerMinas(arrayTablero,filas,columnas) {
+function ponerMinas(arrayTablero,numMinas,filas,columnas) {
     let posFila;
 let posColumna;
 let contadorMinas = 0;
@@ -73,7 +73,7 @@ while (contadorMinas < numMinas) {
         contadorMinas++;
     };
  };
-    
+    return arrayTablero;
 }
 
 
@@ -102,6 +102,7 @@ function numMinasAlrrededor(arrayTablero,filas,columnas) {
             }
         }
     }
+    return arrayTablero;
 }
 
 
