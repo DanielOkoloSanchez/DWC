@@ -45,6 +45,8 @@ class Tablero {
         
     }
 
+    class Buscaminas extends Tablero
+
     const buscaminas = new Tablero(5,5);
     console.log(buscaminas.arrayTablero);
-    buscaminas.pintarTablero;
+    buscaminas.pintarTablero();
