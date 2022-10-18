@@ -45,7 +45,15 @@ class Tablero {
         
     }
 
-    class Buscaminas extends Tablero
+    modificarFilas(nuevasFilas){
+        this.filas = nuevasFilas;
+        
+        crearTablero();
+    }
+
+    modificarColumnas(nuevasColumnas){
+        this.columnas = nuevasColumnas;
+    }
 
     const buscaminas = new Tablero(5,5);
     console.log(buscaminas.arrayTablero);
