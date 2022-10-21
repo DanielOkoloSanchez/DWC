@@ -3,6 +3,9 @@ class Tablero {
     constructor(filas,columnas){
         this.filas = filas;
         this.columnas = columnas
+    
+    
+        this.crearTablero();
     }
 
      crearTablero() {
@@ -15,18 +18,37 @@ class Tablero {
             
             for (let columna = 0; columna < this.columnas; columna++) {
                 this.arrayTablero[fila][columna] = '';
-                console.log(this.arrayTablero);
+               
             }
            
             
         }
     
        
-    } 
+    }
+    
+    
+    mostrarTablero(){
+        document.write("<table>")
+        for (let fila = 0; fila < this.filas ; fila++) {
+            document.write("<tr>")
+            for (let columna = 0; columna < this.columnas ; columna++) {
+                
+                        document.write("<td>"+this.arrayTablero[fila][columna]+"</td>")
+                
+            }
+
+            document.write("</tr>")
+        }
+
+        document.write("</table>")
+    }
 
 
 
 }
 
 let tablero1 = new Tablero(2,2);
-tablero1.crearTablero();
+
+tablero1.mostrarTablero();
+console.log(tablero1);
