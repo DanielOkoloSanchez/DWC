@@ -1,5 +1,5 @@
 class Tablero {
-
+   
     constructor(filas,columnas){
         this.filas = filas;
         this.columnas = columnas
@@ -7,6 +7,20 @@ class Tablero {
     
         this.crearTablero();
     }
+
+    pedirValores(){
+        this.filas = prompt('¿Cuántas filas quieres?');
+        this.columnas=prompt('¿Cuántas columnas quieres?');
+
+        if((this.filas * this.columnas) % 2 != 0 || this.filas == 0 || this.columnas == 0 || this.filas < 0 || this.columnas < 0 || (this.filas * this.columnas)<4  ){
+            alert("Error al introducir valores")
+            this.pedirValores();
+    } 
+
+    
+            this.crearTablero();
+    }
+    
 
      crearTablero() {
 
@@ -45,10 +59,17 @@ class Tablero {
     }
 
 
+    modificarFilas(nuevasFilas){
+        this.filas = prompt('¿Cuántas filas quieres?');
+        
+        this.crearTablero();
+    }
 
+    
 }
 
-let tablero1 = new Tablero(2,2);
 
+let tablero1 = new Tablero(2,2);
+tablero1.pedirValores();
 tablero1.mostrarTablero();
 console.log(tablero1);
