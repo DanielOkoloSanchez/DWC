@@ -48,7 +48,7 @@ class Tablero {
             document.write("<tr>")
             for (let columna = 0; columna < this.columnas ; columna++) {
                 
-                        document.write("<td>"+this.arrayTablero[fila][columna]+"</td>")
+                        document.write("<td><img src="+this.arrayTablero[fila][columna]+"></td>")
                 
             }
 
@@ -71,66 +71,61 @@ class MemoryGame extends Tablero{
     }
 
 
-   crearParejas(){
-    let posFila;
-    let posColumna;
-    let parejas = [" " , " "];
-    let pareja1;
-    let pareja2;
-    let elementos = ["A","B","X","T","P","I","N","Y","U","L"];
-    let maxCasillas = this.filas * this.columnas;
-
-    for (let i = 0; i < elementos.length; i++) {
-        for (let j = 0; j < elementos.length; j++) {
-             if (elementos[i]==elementos[j]) {
-                pareja1 = elementos[i]; 
-                pareja2 = elementos[j];
-
-                parejas = [pareja1,pareja2];
+    crearParejas(){
+        let posFila;
+        let posColumna;
+        let i = 0;
+        let contarPareja = 0;
+        let elementos = ["imgs/doom.jpeg","imgs/ashe.jpeg","imgs/dva.jpeg","imgs/hanzo.jpeg","imgs/kiriko.jpeg","imgs/mcCree.jpeg","imgs/mercy.jpeg","imgs/sigma.jpeg","imgs/soldier.jpeg","imgs/tracer.jpeg"];
+        let maxCasillas = (this.filas * this.columnas)/2;
+        
+        while ( i < maxCasillas) {
+            let j = 0;
+            
+            while (j<2) {
 
                 
-            
-            
-            
-               
+
+                posFila = Math.floor(Math.random() * this.filas);
+                posColumna = Math.floor(Math.random() * this.columnas);
+                console.log(elementos[contarPareja]);
+                
+                
+
+                if(this.arrayTablero[posFila][posColumna] == ""){
+                this.arrayTablero[posFila][posColumna] = elementos[contarPareja];
+                contarPareja++;
+                }else{
+                    
+
+                    continue;
+                }
+
+                if(contarPareja == 10){
+                    contarPareja = 0;
+                }
+                
+                j++;
+                
             }
-        
-        
+
+            i++;
+            
+            
+            
+            
         }
-        
-        for (let k = 0; k < parejas.length; k++) {
-            posFila = Math.floor(Math.random() * this.filas);
-            posColumna = Math.floor(Math.random() * this.columnas);
-            
-
-            
-
-            
-            this.arrayTablero[posFila][posColumna] = parejas[1]
-            
-        
-        
+    
+        console.log(this.arrayTablero);
+      
     }
-
     
 
-    
-
-   
-    
-
-
-
-    
-   }
-
-   console.log(this.arrayTablero)
-  
-}
-
-}
+        
+      
+    }
 
 let MemoryGame1 = new MemoryGame(2,2);
 MemoryGame1.pedirValores();
-MemoryGame1.mostrarTablero();
 MemoryGame1.crearParejas();
+MemoryGame1.mostrarTablero();
