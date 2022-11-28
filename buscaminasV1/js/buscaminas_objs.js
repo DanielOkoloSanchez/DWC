@@ -1,94 +1,110 @@
 class Tablero {
-    constructor(filas,columnas){
+    constructor(filas, columnas) {
         this.filas = filas;
         this.columnas = columnas;
 
         this.crearTablero();
+         console.log(this.arrayTablero);
     }
 
-    crearTablero(){
-        
+    crearTablero() {
+        // Crear array bidimensional para guardar las minas
+        this.arrayTablero = [];
 
-            this.arrayTablero = [];
-            
-        
-            for (let fila = 0; fila < this.filas; fila++) {
-                this.arrayTablero[fila] = new Array(this.filas);
-            
-                for (let columna = 0; columna < this.columnas; columna++) {
-                    this.arrayTablero[fila][columna] = '';
-                }
+        for (let fila = 0; fila < this.filas; fila++) {
+            this.arrayTablero[fila] = [];
+
+            for (let columna = 0; columna < this.columnas; columna++) {
+                this.arrayTablero[fila][columna] = '';
             }
-           
-            
-        
         }
+    }
 
-
-    pintarTablero() {
-            
+    dibujarTableroHTML() {
+        // Creamos el tablero en html
         document.write('<table>');
-        
+
         for (let i = 0; i < this.filas; i++) {
             document.write('<tr>');
-        
+
             for (let j = 0; j < this.columnas; j++) {
-                document.write('<td>'+ this.arrayTablero[i][j] +'</td>');
+                document.write(`<td></td>`);
             }
-        
+
             document.write('</tr>');
         }
         document.write('</table>');
-        
+    }
+
+    dibujarTableroDOM(){
+        // Creamos el tablero en DOM
+        let tabla = document.createElement('table');
+        let fila;
+        let columna;
+
+        for (let i = 0; i < this.filas; i++) {
+            fila = document.createElement('tr');
+            tabla.appendChild(fila);
+
+            for (let j = 0; j < this.columnas; j++) {
+                columna = document.createElement('td');
+                columna.id = `f${i}_c${j}`;
+                columna.dataset.fila = i;
+                columna.dataset.columna = j;
+                fila.appendChild(columna);
+            }
         }
 
-        
+        document.body.appendChild(tabla);
+    }
+
+    
     
 
-    modificarFilas(nuevasFilas){
+    modificarFilas(nuevasFilas) {
+        // Modificar el número de filas y volver a crear el tablero con las filas nuevas
         this.filas = nuevasFilas;
-        
+
         this.crearTablero();
     }
 
-    modificarColumnas(nuevasColumnas){
+    modificarColumnas(nuevasColumnas) {
+        // Modificar el número de columnas y volver a crear el tablero con las columnas nuevas
         this.columnas = nuevasColumnas;
 
         this.crearTablero();
     }
+
+
 }
 
-
-class Buscaminas extends Tablero{
-    constructor(filas,columnas,numMinas){
-        super(filas , columnas);
+class Buscaminas extends Tablero {
+    constructor(filas, columnas, numMinas) {
+        super(filas, columnas);
         this.numMinas = numMinas;
 
-
-        this.ponerMinas();
-        this.contarMinasAlrededor();
-        
+        this.colocarMinas();
+        this.colocarNumMinas();
     }
 
-    ponerMinas() {
+    colocarMinas() {
+        let contadorMinas = 0;
         let posFila;
         let posColumna;
-        let contadorMinas = 0;
-    
-    while (contadorMinas < this.numMinas) {
-        posFila = Math.floor(Math.random() * this.filas);
-        posColumna = Math.floor(Math.random() * this.columnas);
-    
-        if (this.arrayTablero[posFila][posColumna] != 'MINA') {
-            this.arrayTablero[posFila][posColumna] = 'MINA';
-            contadorMinas++;
+
+
+        while (contadorMinas < this.numMinas) {
+            posFila = Math.floor(Math.random() * this.filas);
+            posColumna = Math.floor(Math.random() * this.columnas);
+
+            if (this.arrayTablero[posFila][posColumna] != 'MINA') {
+                this.arrayTablero[posFila][posColumna] = 'MINA';
+                contadorMinas++;
+            };
         };
-     };
-        
     }
 
-     contarMinasAlrededor() {
-
+    colocarNumMinas() {
         let numMinasAlrededor;
 
         for (let fila = 0; fila < this.filas; fila++) {
@@ -100,22 +116,118 @@ class Buscaminas extends Tablero{
                             for (let cColumna = columna - 1; cColumna <= columna + 1; cColumna++) {
                                 if (cColumna >= 0 && cColumna < this.columnas &&
                                     this.arrayTablero[cFila][cColumna] == 'MINA') {
-                                    
                                     numMinasAlrededor++;
                                 }
                             }
                         }
                         this.arrayTablero[fila][columna] = numMinasAlrededor;
                     }
-        
                 }
             }
         }
-       
     }
+
+    dibujarTableroDOM(){
+        super.dibujarTableroDOM();
+
+        let celda;
+
+        for (let i = 0; i < this.filas; i++) {
+            for (let j = 0; j < this.columnas; j++){
+                celda = document.getElementById(`f${i}_c${j}`);
+
+                celda.addEventListener('click', this.despejar.bind(this));
+                celda.addEventListener('contextmenu', this.marcar.bind(this));
+            }
+        }
+    }
+
+    despejar(elEvento) {
+        let evento = elEvento || window.event;
+        let celda = evento.currentTarget;
+        let fila = celda.dataset.fila;
+        let columna = celda.dataset.columna;
+        let casilla = document.getElementById(celda.id);
+        
+        if (this.arrayTablero[fila][columna] != "MINA") {
+
+            if (this.arrayTablero[fila][columna] == 0) {
+                casilla.innerHTML = " ";
+            }else{
+            casilla.innerHTML = this.arrayTablero[fila][columna]
+        }
+        }else{
+
+            for (let i = 0; i < this.filas; i++) {
+                for (let j = 0; j < this.columnas; j++) {
+                    
+                   
+                }
+                
+             }
+           
+          
+        
+    }
+    }
+     marcar(elEvento) {
+        let evento = elEvento || window.event;
+        let celda = evento.currentTarget;
+        document.oncontextmenu =new Function("return false");
+        let casilla = document.getElementById(celda.id);
+        
+       
+            
+        
+        
+        if (casilla.innerHTML == "🚩" ) {
+            casilla.innerHTML = "❓";
+            
+        }else if (casilla.innerHTML == "❓") {
+            casilla.innerHTML = " ";
+    
+            
+        }else{
+            casilla.innerHTML = "🚩";
+        }
+        
+        
+        
+            
+    }
+
+        // Utilizando los formatos UNICODE de JS
+        /*
+        if (this.innerHTML == "") {
+            this.innerHTML = "\uD83D\uDEA9";
+        } else if (this.innerHTML == "\uD83D\uDEA9") {
+            this.innerHTML = "\u2754";
+        } else if(this.innerHTML == "\u2754") {
+            this.innerHTML = "";
+        };
+        */
+
+        // Utilizando clases en el .css
+        /*
+         switch (this.className) {
+            case "":
+                this.className = "bandera";
+                break;
+            case "bandera":
+                this.className = "interrogante";
+                break;
+            default:
+                this.className = "";
+                break;
+         }
+        */
+            
+    }
+
+
+window.onload = function() {
+    let buscaminas1 = new Buscaminas(5, 5, 5);
+   
+    buscaminas1.dibujarTableroDOM();
     
 }
-   
-let buscaMinas1 = new Buscaminas(5,5,5);
-console.log(buscaMinas1.arrayTablero);
-buscaMinas1.pintarTablero();

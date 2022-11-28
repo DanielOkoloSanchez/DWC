@@ -48,7 +48,7 @@ class Tablero {
             document.write("<tr>")
             for (let columna = 0; columna < this.columnas ; columna++) {
                 
-                        document.write("<td><img src="+this.arrayTablero[fila][columna]+"></td>")
+                        document.write("<td>"+this.arrayTablero[fila][columna]+"</td>")
                 
             }
 
@@ -76,7 +76,7 @@ class MemoryGame extends Tablero{
         let posColumna;
         let i = 0;
         let contarPareja = 0;
-        let elementos = ["imgs/doom.jpeg","imgs/ashe.jpeg","imgs/dva.jpeg","imgs/hanzo.jpeg","imgs/kiriko.jpeg","imgs/mcCree.jpeg","imgs/mercy.jpeg","imgs/sigma.jpeg","imgs/soldier.jpeg","imgs/tracer.jpeg"];
+        let elementos = ["A","B","C","D","S","h","l","l","p"];
         let maxCasillas = (this.filas * this.columnas)/2;
         
         while ( i < maxCasillas) {
@@ -94,24 +94,24 @@ class MemoryGame extends Tablero{
 
                 if(this.arrayTablero[posFila][posColumna] == ""){
                 this.arrayTablero[posFila][posColumna] = elementos[contarPareja];
-                contarPareja++;
+                
                 }else{
-                    
-
                     continue;
                 }
 
-                if(contarPareja == 10){
-                    contarPareja = 0;
-                }
+                
                 
                 j++;
                 
+               
+                
             }
 
+            contarPareja++;
             i++;
-            
-            
+            if(contarPareja == 10){
+                contarPareja = 0;
+            }
             
             
         }
