@@ -58,6 +58,10 @@ class Tablero {
             for (let columna = 0; columna < this.columnas ; columna++) {
                 
             columnaTablero = document.createElement('td');
+            columnaTablero.id = `f${fila}_c${columna}`;
+            columnaTablero.dataset.filaCordenada = fila;
+            columnaTablero.dataset.columnaCordenada = columna;
+
             filaTablero.appendChild(columnaTablero);
                 
             }
@@ -80,6 +84,43 @@ class MemoryGame extends Tablero{
     constructor(filas,columnas){
         super(filas,columnas);
     }
+
+    mostrarTablero(){
+
+        
+      super.mostrarTablero();
+      let casilla;
+        
+        this.levantar = this.levantar.bind(this);
+
+        for (let fila = 0; fila < this.filas ; fila++) {
+            for (let columna = 0; columna < this.columnas ; columna++) {
+                casilla = document.getElementById(`f${fila}_c${columna}`);
+                
+                casilla.addEventListener('contextmenu',this.levantar);
+                
+            }
+
+          
+        }
+
+        
+
+    }
+
+    levantar(elEvento){
+        let evento = elEvento || window.event;
+        let casilla = evento.currentTarget;
+        
+        let fila = casilla.dataset.filaCordenada;
+        let columna = casilla.dataset.columnaCordenada;
+        let valorCasilla = this.arrayTablero[fila][columna];
+        
+        let imagen = document.createElement("img");
+
+        
+    }
+
 // Crea e introduce las parejas al tablero de forma aleatoria.
     crearParejas(){
         let posFila;
