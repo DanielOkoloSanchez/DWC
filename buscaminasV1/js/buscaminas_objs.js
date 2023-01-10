@@ -4,7 +4,6 @@ class Tablero {
         this.columnas = columnas;
 
         this.crearTablero();
-         console.log(this.arrayTablero);
     }
 
     crearTablero() {
@@ -51,6 +50,7 @@ class Tablero {
                 columna.id = `f${i}_c${j}`;
                 columna.dataset.fila = i;
                 columna.dataset.columna = j;
+                columna.dataset.despejado = false;
                 fila.appendChild(columna);
             }
         }
@@ -83,6 +83,7 @@ class Buscaminas extends Tablero {
         super(filas, columnas);
         this.numMinas = numMinas;
 
+        this.bombasBien = 0;
         this.colocarMinas();
         this.colocarNumMinas();
     }
@@ -140,61 +141,129 @@ class Buscaminas extends Tablero {
                 celda.addEventListener('contextmenu', this.marcar.bind(this));
             }
         }
+        console.log(this.arrayTablero);
     }
 
     despejar(elEvento) {
         let evento = elEvento || window.event;
         let celda = evento.currentTarget;
+        this.despejarRecursivo(celda);
+}
+
+
+    
+
+
+    despejarRecursivo(celda) {
+        
+        
         let fila = celda.dataset.fila;
         let columna = celda.dataset.columna;
-        let casilla = document.getElementById(celda.id);
+        let celdaNueva;
+
+        let estaDespejado = celda.dataset.despejado = true;
+         
+        let valorCelda = this.arrayTablero[fila][columna];
+        let esNumero = (valorCelda != 'MINA' && valorCelda != 0);
+        let esBomba = (valorCelda == 'MINA');
+        let esVacia = (valorCelda == 0);
+        let bombaSeleccionadaMal;
+
+        let rutaBandera = "file:///home/horabaixa/Escritorio/DWC/buscaminasV1/img/bandera.png";
         
-        if (this.arrayTablero[fila][columna] != "MINA") {
+        let arrayFilas;
+        let arrayColumnas; 
 
-            if (this.arrayTablero[fila][columna] == 0) {
-                casilla.innerHTML = " ";
-            }else{
-            casilla.innerHTML = this.arrayTablero[fila][columna]
-        }
-        }else{
+        if (esNumero) {
+            celda.innerHTML = valorCelda;
+            celda.removeEventListener('click', this.despejar.bind(this));
+            celda.removeEventListener('contextmenu', this.marcar.bind(this));
+        } else if (esBomba) {
+            
+            arrayFilas = celda.parentNode.parentNode.childNodes;
+            for (let tr of arrayFilas) {
+                arrayColumnas = tr.childNodes;
+                for (let td of arrayColumnas){
+                    td.removeEventListener('click', this.despejar.bind(this));
+                    td.removeEventListener('contextmenu', this.marcar.bind(this));
 
-            for (let i = 0; i < this.filas; i++) {
-                for (let j = 0; j < this.columnas; j++) {
+                    fila = td.dataset.fila;
+                    columna = td.dataset.columna;
+                    valorCelda = this.arrayTablero[fila][columna]
                     
                    
-                }
-                
-             }
-           
-          
+                    
+                    
+                    
+                    if (td.lastChild != null){
+
+                        bombaSeleccionadaMal = (td.lastChild.src ==  rutaBandera && valorCelda != 'MINA');
+
+                        if (!bombaSeleccionadaMal) {
+                            this.bombasBien = this.bombasBien + 1;
+                        }
+                       
+                    
+                        if (bombaSeleccionadaMal){
+                            td.lastChild.src = "";
+                            td.style.backgroundColor = 'red';
+                            td.innerHTML = valorCelda;
+                        } else if (valorCelda == 'MINA') {
+                            td.innerHTML = valorCelda;
+                        }
+                    } else if (valorCelda == 'MINA') {
+                            td.innerHTML = valorCelda;
+                    }
+
+                    if (this.bombasBien == this.numMinas) {
+                        alert("has ganado");
+                    }
+
+            alert(`¡HAS PERDIDO!`);
+        }
+
+    }
+}
         
+else if(esVacia){
+    celda.innerHTML = "";
+    esNumero = (valorCelda != 'MINA' && valorCelda != 0);
+    for (let cFila = parseInt(fila) - 1; cFila <= parseInt(fila) + 1; cFila++) {
+        if (cFila >= 0 && cFila < this.filas) {
+            for (let cColumna = parseInt(columna) - 1; cColumna <= parseInt(columna) + 1; cColumna++) {
+                if (cColumna >= 0 && cColumna < this.columnas && !estaDespejado){
+                    
+                   celdaNueva = document.getElementById(`f${cFila}_c${cColumna}`)
+                   
+                   estaDespejado = (celdaNueva.dataset.estaDespejado)
+                    
+                }
+                   
+            }
+}
+}
+}
     }
-    }
-     marcar(elEvento) {
+
+    marcar(elEvento) {
         let evento = elEvento || window.event;
         let celda = evento.currentTarget;
-        document.oncontextmenu =new Function("return false");
-        let casilla = document.getElementById(celda.id);
-        
-       
-            
-        
-        
-        if (casilla.innerHTML == "🚩" ) {
-            casilla.innerHTML = "❓";
-            
-        }else if (casilla.innerHTML == "❓") {
-            casilla.innerHTML = " ";
-    
-            
-        }else{
-            casilla.innerHTML = "🚩";
+        // Utilizando el elemento img
+        let imagen = document.createElement('img');
+        imagen.style.height = "50px";
+        window.oncontextmenu = function() {
+            return false;}
+
+        if (celda.lastChild == null) {
+            imagen.src = "img/bandera.png";
+            celda.appendChild(imagen);
+        } else if (celda.lastChild.src == "file:///home/horabaixa/Escritorio/DWC/buscaminasV1/img/bandera.png") {
+            celda.lastChild.src = "img/interrogante.png";
+        }else if (celda.lastChild.src == "file:///home/horabaixa/Escritorio/DWC/buscaminasV1/img/interrogante.png") {
+            celda.removeChild(celda.lastChild);
         }
         
-        
-        
-            
-    }
+       
 
         // Utilizando los formatos UNICODE de JS
         /*
@@ -224,10 +293,9 @@ class Buscaminas extends Tablero {
             
     }
 
+}
 
 window.onload = function() {
     let buscaminas1 = new Buscaminas(5, 5, 5);
-   
     buscaminas1.dibujarTableroDOM();
-    
 }
