@@ -118,6 +118,9 @@ class MemoryGame extends Tablero{
         
         let imagen = document.createElement("img");
 
+        imagen.src=valorCasilla;
+        casilla.appendChild(imagen);
+
         
     }
 
