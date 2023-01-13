@@ -83,6 +83,9 @@ class MemoryGame extends Tablero{
     
     constructor(filas,columnas){
         super(filas,columnas);
+        let idUltimaCasilla;
+        let ultimaFoto;
+       
     }
 
     mostrarTablero(){
@@ -98,6 +101,8 @@ class MemoryGame extends Tablero{
                 casilla = document.getElementById(`f${fila}_c${columna}`);
                 
                 casilla.addEventListener('contextmenu',this.levantar);
+
+                
                 
             }
 
@@ -109,18 +114,60 @@ class MemoryGame extends Tablero{
     }
 
     levantar(elEvento){
+        
+      
+      
         let evento = elEvento || window.event;
         let casilla = evento.currentTarget;
         
+        window.oncontextmenu = function() {
+            return false;}
+
         let fila = casilla.dataset.filaCordenada;
         let columna = casilla.dataset.columnaCordenada;
         let valorCasilla = this.arrayTablero[fila][columna];
-        
+        let idCasilla = casilla.id;
         let imagen = document.createElement("img");
-
         imagen.src=valorCasilla;
-        casilla.appendChild(imagen);
+        let ultimaCasilla = document.getElementById(this.idUltimaCasilla);
+        
+        
 
+        if (casilla.lastChild == null) {
+            casilla.appendChild(imagen);
+           
+          if (this.idUltimaCasilla!=idCasilla && this.idUltimaCasilla!=null) {
+            if(this.ultimaFoto!=valorCasilla){
+               console.log("casilla distinta")
+            
+              casilla.removeChild(casilla.lastChild);
+              ultimaCasilla.removeChild(ultimaCasilla.lastChild);
+
+            }else(
+                console.log("casillas iguales")
+                
+             )
+            
+            
+          }
+          
+          
+           this.idUltimaCasilla = idCasilla;
+           this.ultimaFoto = valorCasilla;
+         
+           
+        }
+
+       console.log(this.ultimaCasilla);
+        
+        
+      
+        
+        
+        
+        
+        
+        
         
     }
 
