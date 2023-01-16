@@ -23,3 +23,17 @@ td{
 img{
     height: 100px;
 }
+
+#boton{
+    height: 5%;
+    width: 5%;
+    border-radius: 10%;
+    padding: 1%;
+    text-align: center;
+    background-color: gray;
+    
+}
+
+#boton:hover{
+    background-color: lightgray
+}

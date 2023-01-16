@@ -178,6 +178,15 @@ class MemoryGame extends Tablero{
         
     }
 
+    crearBoton(){
+        let boton = document.createElement("div");
+        boton.id = "boton"
+
+        document.body.appendChild(boton);
+
+        boton.innerHTML = "Reiniciar";
+    }
+
 // Crea e introduce las parejas al tablero de forma aleatoria.
     crearParejas(){
         let posFila;
@@ -244,6 +253,7 @@ window.onload = function(){
     MemoryGame1.pedirValores();
     MemoryGame1.crearParejas();
     MemoryGame1.mostrarTablero()
+    MemoryGame1.crearBoton();
     
    
 }
