@@ -211,7 +211,7 @@ class MemoryGame extends Tablero{
             this.ultimaFoto = null;
             this.contadorClic = 0;
             this.reiniciarCasillas();
-
+            this.crearParejas();
 
          
             
