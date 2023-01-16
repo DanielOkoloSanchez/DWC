@@ -157,10 +157,15 @@ class MemoryGame extends Tablero{
            this.ultimaFoto = valorCasilla;
           
            if (this.contadorClic == 2) {
+            
+            
             this.idUltimaCasilla = null;
             this.ultimaFoto = null;
             this.contadorClic = 0;
-           }
+
+            
+            
+        }
            
            
         }
@@ -180,12 +185,53 @@ class MemoryGame extends Tablero{
 
     crearBoton(){
         let boton = document.createElement("div");
+        this.reiniciarPartida = this.reiniciarPartida.bind(this);
         boton.id = "boton"
 
         document.body.appendChild(boton);
 
         boton.innerHTML = "Reiniciar";
+
+        boton.addEventListener("click",this.reiniciarPartida);
     }
+
+
+
+    reiniciarPartida(elEvento){
+        let evento = elEvento || window.event;
+        let boton = evento.currentTarget;
+
+        console.log("si");
+        let opcion = confirm("Quiere reiniciar su partida");
+        
+        if (opcion == true) {
+            
+            
+            this.idUltimaCasilla = null;
+            this.ultimaFoto = null;
+            this.contadorClic = 0;
+            this.reiniciarCasillas();
+
+
+         
+            
+        }
+        
+    }
+
+    reiniciarCasillas(){
+        for (let fila = 0; fila < this.filas ; fila++) {
+            for (let columna = 0; columna < this.columnas ; columna++) {
+                
+                 let casilla = document.getElementById(`f${fila}_c${columna}`);        
+                casilla.removeChild(casilla.lastChild);
+            }
+
+          
+        }
+    }
+
+
 
 // Crea e introduce las parejas al tablero de forma aleatoria.
     crearParejas(){
