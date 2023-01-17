@@ -37,3 +37,13 @@ img{
 #boton:hover{
     background-color: lightgray
 }
+
+#marcador{
+    margin: auto;
+    text-align: center;
+    height: 20%;
+    width: 30%;
+    border: 2px solid black;
+    background-color: lightgray;
+    padding: 1%;
+}

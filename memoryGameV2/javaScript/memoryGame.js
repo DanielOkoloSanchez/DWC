@@ -86,6 +86,11 @@ class MemoryGame extends Tablero{
          this.idUltimaCasilla;
          this.ultimaFoto;
          this.contadorClic = 0;
+         this.puntosObtenidos = 0;
+         this.casillas = this.columnas * this.filas;
+         this.puntuacionMaxima = (this.casillas/2) * 10;
+         
+         
        
     }
 
@@ -166,8 +171,6 @@ class MemoryGame extends Tablero{
            this.ultimaFoto = valorCasilla;
           
            if (this.contadorClic == 2) {
-            
-            
             this.idUltimaCasilla = null;
             this.ultimaFoto = null;
             this.contadorClic = 0;    
@@ -208,7 +211,15 @@ class MemoryGame extends Tablero{
         
     }
 
+    crearMarcador(){
+        let marcador = document.createElement("div");
+        
+        document.body.appendChild(marcador);
 
+        marcador.id="marcador";
+        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima}`;
+        
+    }
 
 
 // Crea e introduce las parejas al tablero de forma aleatoria.
@@ -276,8 +287,10 @@ window.onload = function(){
     let MemoryGame1 = new MemoryGame(2,2);
     MemoryGame1.pedirValores();
     MemoryGame1.crearParejas();
+    MemoryGame1.crearMarcador();
     MemoryGame1.mostrarTablero()
     MemoryGame1.crearBoton();
+   
     
    
 }
