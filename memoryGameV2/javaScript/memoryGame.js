@@ -137,12 +137,21 @@ class MemoryGame extends Tablero{
         if (casilla.lastChild == null) {
             casilla.appendChild(imagen);
             this.contadorClic++;
-          if (this.idUltimaCasilla!=idCasilla && this.idUltimaCasilla!=null) {
-            if(this.ultimaFoto!=valorCasilla){
-               console.log("casilla distinta")
+         
+           if (this.idUltimaCasilla!=idCasilla && this.idUltimaCasilla!=null) {
             
-              casilla.removeChild(casilla.lastChild);
-              ultimaCasilla.removeChild(ultimaCasilla.lastChild);
+                if(this.ultimaFoto!=valorCasilla){
+               
+                    console.log("casilla distinta")
+
+                    setTimeout(borrar,700);
+           
+            function borrar(){
+            casilla.removeChild(casilla.lastChild);
+            ultimaCasilla.removeChild(ultimaCasilla.lastChild);
+            }
+            
+              
 
             }else{
                 console.log("casillas iguales")
