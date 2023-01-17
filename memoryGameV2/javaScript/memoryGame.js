@@ -161,25 +161,13 @@ class MemoryGame extends Tablero{
             
             this.idUltimaCasilla = null;
             this.ultimaFoto = null;
-            this.contadorClic = 0;
-
-            
-            
+            this.contadorClic = 0;    
         }
            
            
         }
 
        console.log(this.ultimaCasilla);
-        
-        
-      
-        
-        
-        
-        
-        
-        
         
     }
 
@@ -205,31 +193,12 @@ class MemoryGame extends Tablero{
         let opcion = confirm("Quiere reiniciar su partida");
         
         if (opcion == true) {
-            
-            
-            this.idUltimaCasilla = null;
-            this.ultimaFoto = null;
-            this.contadorClic = 0;
-            this.reiniciarCasillas();
-            this.crearParejas();
 
-         
-            
+            location.reload();   
         }
         
     }
 
-    reiniciarCasillas(){
-        for (let fila = 0; fila < this.filas ; fila++) {
-            for (let columna = 0; columna < this.columnas ; columna++) {
-                
-                 let casilla = document.getElementById(`f${fila}_c${columna}`);        
-                casilla.removeChild(casilla.lastChild);
-            }
-
-          
-        }
-    }
 
 
 
