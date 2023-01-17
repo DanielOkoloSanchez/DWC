@@ -87,8 +87,8 @@ class MemoryGame extends Tablero{
          this.ultimaFoto;
          this.contadorClic = 0;
          this.puntosObtenidos = 0;
-         this.casillas = this.columnas * this.filas;
-         this.puntuacionMaxima = (this.casillas/2) * 10;
+         this.casillas ; 
+         this.puntuacionMaxima;
          
          
        
@@ -215,9 +215,9 @@ class MemoryGame extends Tablero{
         let marcador = document.createElement("div");
         
         document.body.appendChild(marcador);
-
+        this.casillas = this.columnas * this.filas;
         marcador.id="marcador";
-        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima}`;
+        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
         
     }
 
