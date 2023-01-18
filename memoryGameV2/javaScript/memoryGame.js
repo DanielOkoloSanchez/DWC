@@ -89,6 +89,7 @@ class MemoryGame extends Tablero{
          this.puntosObtenidos = 0;
          this.casillas ; 
          this.puntuacionMaxima;
+         this.intentos = 0;
          
          
        
@@ -149,6 +150,8 @@ class MemoryGame extends Tablero{
                
                     console.log("casilla distinta")
 
+                    this.intentos++;
+
                     setTimeout(borrar,700);
            
             function borrar(){
@@ -159,14 +162,28 @@ class MemoryGame extends Tablero{
               
 
             }else{
-                console.log("casillas iguales")
                 
+                    console.log("casillas iguales");
+        
+                    if (this.intentos == 0) {
+                        this.puntosObtenidos = this.puntosObtenidos + 10;
+                    }else if (this.intentos == 1 ){
+                        this.puntosObtenidos = this.puntosObtenidos + 5;
+                        
+                    }else if (this.intentos == 2){
+                        this.puntosObtenidos = this.puntosObtenidos + 2.5;
+                    }else{
+                        this.puntosObtenidos = this.puntosObtenidos + 0;
+                    
+                }
+
+                this.obtenerDatosMarcador();
             }
             
             
           }
           
-          
+          console.log(this.puntosObtenidos);
            this.idUltimaCasilla = idCasilla;
            this.ultimaFoto = valorCasilla;
           
@@ -179,7 +196,7 @@ class MemoryGame extends Tablero{
            
         }
 
-       console.log(this.ultimaCasilla);
+      
         
     }
 
@@ -219,6 +236,10 @@ class MemoryGame extends Tablero{
         marcador.id="marcador";
         marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
         
+    }
+
+    obtenerDatosMarcador(){
+        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
     }
 
 
@@ -294,4 +315,3 @@ window.onload = function(){
     
    
 }
-
