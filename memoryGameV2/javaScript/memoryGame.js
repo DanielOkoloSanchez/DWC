@@ -87,14 +87,18 @@ class MemoryGame extends Tablero{
          this.ultimaFoto;
          this.contadorClic = 0;
          this.puntosObtenidos = 0;
-         this.casillas ; 
+         this.casillas =  this.columnas * this.filas;  
          this.puntuacionMaxima;
          this.intentos = 0;
+         this.contadorParejas = 0;
+         this.tiempo = 0;
+         
          
          
        
     }
 
+//funcion para mostrar tablero con eventListeners
     mostrarTablero(){
 
         
@@ -107,6 +111,7 @@ class MemoryGame extends Tablero{
             for (let columna = 0; columna < this.columnas ; columna++) {
                 casilla = document.getElementById(`f${fila}_c${columna}`);
                 
+
                 casilla.addEventListener('contextmenu',this.levantar);
 
                 
@@ -120,8 +125,9 @@ class MemoryGame extends Tablero{
 
     }
 
+// funcion para el correcto funcionamiento del tablero
     levantar(elEvento){
-        
+       let cronometro = setInterval(()=>this.tiempo++,1000); 
       
       
         let evento = elEvento || window.event;
@@ -139,11 +145,14 @@ class MemoryGame extends Tablero{
         let ultimaCasilla = document.getElementById(this.idUltimaCasilla);
         
     
-
+//Destapa la casilla 
+        
         if (casilla.lastChild == null) {
+            
+            
             casilla.appendChild(imagen);
             this.contadorClic++;
-         
+// Mira que sean casillas distintas y que la imagen sea distinta o igual 
            if (this.idUltimaCasilla!=idCasilla && this.idUltimaCasilla!=null) {
             
                 if(this.ultimaFoto!=valorCasilla){
@@ -154,17 +163,18 @@ class MemoryGame extends Tablero{
 
                     setTimeout(borrar,700);
            
+// funcion para tapar casillas
             function borrar(){
             casilla.removeChild(casilla.lastChild);
             ultimaCasilla.removeChild(ultimaCasilla.lastChild);
-            }
             
-              
-
+        }
+            
             }else{
                 
-                    console.log("casillas iguales");
-                    
+                   
+// Comprueba la puntuacion segun los intentos.
+
                     if (this.intentos == 0) {
                         this.puntosObtenidos = this.puntosObtenidos + 10;
                     }else if (this.intentos == 1 ){
@@ -176,30 +186,28 @@ class MemoryGame extends Tablero{
                         this.puntosObtenidos = this.puntosObtenidos + 0;
                     
                 }
+                this.contadorParejas++;
                 this.intentos = 0;
-                this.obtenerDatosMarcador();
+                this.actualizarDatosMarcador();
             }
-            
             
           }
           
-          console.log(this.puntosObtenidos);
            this.idUltimaCasilla = idCasilla;
            this.ultimaFoto = valorCasilla;
           
+// reinicia los valores almacenados
            if (this.contadorClic == 2) {
             this.idUltimaCasilla = null;
             this.ultimaFoto = null;
-            this.contadorClic = 0;    
+            this.contadorClic = 0; 
         }
            
-           
         }
-
-      
         
     }
 
+// crea el boton de reinicio para que pueda ser visualizado.
     crearBoton(){
         let boton = document.createElement("div");
         this.reiniciarPartida = this.reiniciarPartida.bind(this);
@@ -212,7 +220,7 @@ class MemoryGame extends Tablero{
         boton.addEventListener("click",this.reiniciarPartida);
     }
 
-
+// Función para que el evento de el boton de reinicio funcione
 
     reiniciarPartida(elEvento){
         let evento = elEvento || window.event;
@@ -228,18 +236,33 @@ class MemoryGame extends Tablero{
         
     }
 
+    //crea el marcador para poder ser visualizado 
     crearMarcador(){
         let marcador = document.createElement("div");
         
         document.body.appendChild(marcador);
-        this.casillas = this.columnas * this.filas;
+        
         marcador.id="marcador";
         marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
         
     }
 
-    obtenerDatosMarcador(){
+    //Funcion que actualiza los puntos del marcador y llama a la funcion ganar.
+
+    actualizarDatosMarcador(){
         marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
+
+        if (this.contadorParejas == this.casillas/2) {
+           setTimeout(this.ganar,500);
+           this.ganar();
+              
+            }
+    }
+
+    // Función que muestra la puntuación final y lo que has tardado en completarlo.
+
+    ganar(){
+        alert("Enhorabuena has gando , tu puntuación ha sido de " + this.puntosObtenidos + " puntos de " + this.puntuacionMaxima + " puntos y tu tiempo en segundos es de " + this.tiempo + "segundos")
     }
 
 
@@ -313,5 +336,4 @@ window.onload = function(){
     MemoryGame1.crearBoton();
    
     
-   
 }
