@@ -164,7 +164,7 @@ class MemoryGame extends Tablero{
             }else{
                 
                     console.log("casillas iguales");
-        
+                    
                     if (this.intentos == 0) {
                         this.puntosObtenidos = this.puntosObtenidos + 10;
                     }else if (this.intentos == 1 ){
@@ -176,7 +176,7 @@ class MemoryGame extends Tablero{
                         this.puntosObtenidos = this.puntosObtenidos + 0;
                     
                 }
-
+                this.intentos = 0;
                 this.obtenerDatosMarcador();
             }
             
