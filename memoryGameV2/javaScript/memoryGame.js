@@ -87,8 +87,8 @@ class MemoryGame extends Tablero{
          this.ultimaFoto;
          this.contadorClic = 0;
          this.puntosObtenidos = 0;
-         this.casillas =  this.columnas * this.filas;  
-         this.puntuacionMaxima;
+         this.casillas;   
+         this.puntuacionMaxima = (this.casillas/2) * 10;
          this.intentos = 0;
          this.contadorParejas = 0;
          this.tiempo = 0;
@@ -152,6 +152,7 @@ class MemoryGame extends Tablero{
             
             casilla.appendChild(imagen);
             this.contadorClic++;
+            
 // Mira que sean casillas distintas y que la imagen sea distinta o igual 
            if (this.idUltimaCasilla!=idCasilla && this.idUltimaCasilla!=null) {
             
@@ -224,7 +225,7 @@ class MemoryGame extends Tablero{
 
     reiniciarPartida(elEvento){
         let evento = elEvento || window.event;
-        let boton = evento.currentTarget;
+        
 
         console.log("si");
         let opcion = confirm("Quiere reiniciar su partida");
@@ -242,19 +243,21 @@ class MemoryGame extends Tablero{
         
         document.body.appendChild(marcador);
         
+        this.casillas = this.columnas * this.filas;
         marcador.id="marcador";
-        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
+        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2)*10}`;
         
     }
 
     //Funcion que actualiza los puntos del marcador y llama a la funcion ganar.
 
     actualizarDatosMarcador(){
-        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2) * 10}`;
+        marcador.innerHTML = `${this.puntosObtenidos}/${this.puntuacionMaxima = (this.casillas/2)*10}`;
+        
 
         if (this.contadorParejas == this.casillas/2) {
-           setTimeout(this.ganar,500);
-           this.ganar();
+           setTimeout(this.ganar.bind(this),500);
+           
               
             }
     }
@@ -262,7 +265,7 @@ class MemoryGame extends Tablero{
     // Función que muestra la puntuación final y lo que has tardado en completarlo.
 
     ganar(){
-        alert("Enhorabuena has gando , tu puntuación ha sido de " + this.puntosObtenidos + " puntos de " + this.puntuacionMaxima + " puntos y tu tiempo en segundos es de " + this.tiempo + "segundos")
+        alert("Enhorabuena has gando , tu puntuación ha sido de " + this.puntosObtenidos + " puntos de " + this.puntuacionMaxima + " puntos y tu tiempo en segundos es de " + this.tiempo + " segundos")
     }
 
 
